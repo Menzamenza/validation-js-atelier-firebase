@@ -1,0 +1,24 @@
+name: Firebase Hosting CI/CD
+
+on:
+  push:
+    branches:
+      - main  # Déployer à chaque push sur la branche principale
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.12.2'  # Spécifiez la version de Node.js que vous utilisez
+
+    - name: Deploy to Firebase
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      run: firebase deploy --only hosting --project tache-de-validation-js
